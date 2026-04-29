@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('title', 'Manage Tracks')
+@section('content')
+<section class="section"><div class="container">@include('admin.partials.nav')<div class="actions" style="justify-content:space-between;"><h1>Tracks</h1><a class="btn" href="{{ route('admin.tracks.create') }}">Create track</a></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Color</th><th>Sessions</th><th>Actions</th></tr></thead><tbody>@foreach($tracks as $track)<tr><td>{{ $track->name }}</td><td><span class="badge" style="background:{{ $track->color }}20; color:{{ $track->color }}">{{ $track->color }}</span></td><td>{{ $track->sessions_count }}</td><td class="actions"><a href="{{ route('admin.tracks.show', $track) }}">View</a><a href="{{ route('admin.tracks.edit', $track) }}">Edit</a><form method="POST" action="{{ route('admin.tracks.destroy', $track) }}">@csrf @method('DELETE')<button class="btn btn-danger btn-small" onclick="return confirm('Delete this track?')">Delete</button></form></td></tr>@endforeach</tbody></table></div>{{ $tracks->links() }}</div></section>
+@endsection

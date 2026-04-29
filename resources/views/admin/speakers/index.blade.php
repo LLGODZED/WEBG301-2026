@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('title', 'Manage Speakers')
+@section('content')
+<section class="section"><div class="container">@include('admin.partials.nav')<div class="actions" style="justify-content:space-between;"><h1>Speakers</h1><a class="btn" href="{{ route('admin.speakers.create') }}">Create speaker</a></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Sessions</th><th>Actions</th></tr></thead><tbody>@foreach($speakers as $speaker)<tr><td>{{ $speaker->name }}</td><td>{{ $speaker->email }}</td><td>{{ $speaker->phone }}</td><td>{{ $speaker->sessions_count }}</td><td class="actions"><a href="{{ route('admin.speakers.show', $speaker) }}">View</a><a href="{{ route('admin.speakers.edit', $speaker) }}">Edit</a><form method="POST" action="{{ route('admin.speakers.destroy', $speaker) }}">@csrf @method('DELETE')<button class="btn btn-danger btn-small" onclick="return confirm('Delete this speaker?')">Delete</button></form></td></tr>@endforeach</tbody></table></div>{{ $speakers->links() }}</div></section>
+@endsection
