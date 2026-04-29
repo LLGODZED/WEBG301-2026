@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: conference_scheduler_app
+    ports:
+      - "8080:80"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_HOST: db
+      DB_DATABASE: conference_scheduler
+      DB_USERNAME: conference_user
+      DB_PASSWORD: conference_pass
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: conference_scheduler_db
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: conference_scheduler
+      MYSQL_USER: conference_user
+      MYSQL_PASSWORD: conference_pass
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
